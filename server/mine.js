@@ -69,16 +69,14 @@ router.post('/can-mine', async (req, res) => {
   if (!wallet) return res.status(400).json({ allowed: false });
 
   const user = await User.findOne({ wallet });
+
   if (!user) {
     return res.json({ allowed: true });
   }
 
-  if (user.isMining) {
-    return res.json({ allowed: true });
-  } else {
-    return res.json({ allowed: false });
-  }
+  return res.json({ allowed: true });
 });
+
 
 
 module.exports = router;
