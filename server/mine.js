@@ -1,4 +1,5 @@
 // server/mine.js
+console.log('can-mine request:', req.body);
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
