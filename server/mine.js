@@ -64,5 +64,21 @@ router.post('/stop-mine', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+router.post('/can-mine', async (req, res) => {
+  const { wallet } = req.body;
+  if (!wallet) return res.status(400).json({ allowed: false });
+
+  const user = await User.findOne({ wallet });
+  if (!user) {
+    return res.json({ allowed: true });
+  }
+
+  if (user.isMining) {
+    return res.json({ allowed: true });
+  } else {
+    return res.json({ allowed: false });
+  }
+});
+
 
 module.exports = router;
