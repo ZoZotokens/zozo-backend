@@ -1,5 +1,4 @@
 // server/mine.js
-console.log('can-mine request:', req.body);
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
@@ -66,6 +65,7 @@ router.post('/stop-mine', async (req, res) => {
   }
 });
 router.post('/can-mine', async (req, res) => {
+  console.log('can-mine request:', req.body);
   const { wallet } = req.body;
   if (!wallet) return res.status(400).json({ allowed: false });
 
