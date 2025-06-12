@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 
-// دریافت اطلاعات کاربر با آدرس کیف پول
+
 router.get('/:wallet', async (req, res) => {
   try {
     const user = await User.findOne({ wallet: req.params.wallet.toLowerCase() });
@@ -14,7 +14,7 @@ router.get('/:wallet', async (req, res) => {
   }
 });
 
-// ایجاد یا بروزرسانی کاربر
+
 router.post('/', async (req, res) => {
   const {
     wallet,
@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
       user = new User({ wallet: wallet.toLowerCase() });
     }
 
-    // به‌روزرسانی فیلدها در صورت ارسال
+   
     user.minedAmount = minedAmount ?? user.minedAmount;
     user.referralReward = referralReward ?? user.referralReward;
     user.totalClaimed = totalClaimed ?? user.totalClaimed;
@@ -57,7 +57,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// ثبت شروع ماینینگ (مثلاً وقتی کاربر دکمه شروع رو می‌زند)
 router.post('/start-mining', async (req, res) => {
   const { wallet } = req.body;
   if (!wallet) return res.status(400).json({ error: 'Wallet is required' });
@@ -79,7 +78,7 @@ router.post('/start-mining', async (req, res) => {
   }
 });
 
-// ثبت توقف ماینینگ (وقتی کاربر ماینینگ رو متوقف می‌کند)
+
 router.post('/stop-mining', async (req, res) => {
   const { wallet } = req.body;
   if (!wallet) return res.status(400).json({ error: 'Wallet is required' });
@@ -100,7 +99,7 @@ router.post('/stop-mining', async (req, res) => {
   }
 });
 
-// ثبت ادعای توکن (Claim) و ذخیره در تاریخچه
+
 router.post('/claim', async (req, res) => {
   const { wallet, amount } = req.body;
   if (!wallet || amount == null) return res.status(400).json({ error: 'Wallet and amount are required' });
@@ -127,7 +126,6 @@ router.post('/claim', async (req, res) => {
   }
 });
 
-// گرفتن تاریخچه ادعاها (Claim History)
 router.get('/:wallet/claim-history', async (req, res) => {
   try {
     const user = await User.findOne({ wallet: req.params.wallet.toLowerCase() });
@@ -140,7 +138,6 @@ router.get('/:wallet/claim-history', async (req, res) => {
   }
 });
 
-// گرفتن تاریخچه ریفرال‌ها
 router.get('/:wallet/referral-history', async (req, res) => {
   try {
     const user = await User.findOne({ wallet: req.params.wallet.toLowerCase() });
